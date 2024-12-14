@@ -17,7 +17,9 @@ const ToDoList = ({ tasks, deleteTask }) => {
             {tasks.map((task, index) => (
               <Task key={index} task={task} index={index} deleteTask={deleteTask} />
             ))}
-            <p className="text-muted p-3">Tareas pendientes: {tasks.length}</p>
+            {tasks.length > 0 && (
+              <p className="text-muted p-3">Tareas pendientes: {tasks.length}</p>
+            )}
           </ul>
         )}
       </div>

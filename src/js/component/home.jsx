@@ -3,6 +3,7 @@ import ListInput from "./ListInput";
 import ToDoList from "./ToDoList";
 
 const Home = () => {
+  // Tareas iniciales por defecto
   const predefinedTasks = [
     "Hacer los deberes",
     "Hacer la cama",
@@ -11,36 +12,30 @@ const Home = () => {
     "Recoger la mesa",
   ];
 
-  // Inicializa con todas las tareas predefinidas
+  // Estado inicial con las tareas por defecto
   const [tasks, setTasks] = useState(predefinedTasks);
 
-  // Función para agregar todas las tareas predefinidas al presionar Enter
-  const handleAddPredefinedTasks = () => {
-    if (tasks.length === 0) {
-      setTasks(predefinedTasks); // Restaura todas las tareas predefinidas
-    }
-  };
-
-  // Función para agregar una nueva tarea personalizada
   const addTask = (task) => {
-    setTasks([...tasks, task]);
+    setTasks((prevTasks) => [...prevTasks, task]); // Añadir una nueva tarea
   };
 
-  // Función para eliminar una tarea
   const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
+    setTasks(updatedTasks); // Eliminar tarea seleccionada
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && tasks.length === 0) {
+      // No hacemos nada si el usuario presiona "Enter" después de borrar todas las tareas
+      return;
+    }
   };
 
   return (
     <div
       className="container mt-5"
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          handleAddPredefinedTasks();
-        }
-      }}
-      tabIndex={0} // Necesario para capturar eventos de teclado en el div
+      tabIndex={0} // Necesario para capturar eventos de teclado
+      onKeyDown={handleKeyPress}
     >
       <h1 className="text-center mb-4">ToDoList</h1>
       <ListInput addTask={addTask} />
@@ -50,6 +45,12 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+
+
+
 
 
 
